@@ -1,10 +1,31 @@
 // React Native
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, Button, StyleSheet } from "react-native";
+
+// Utils
+import supabase from "@/utils/supabase.ts";
 
 export default function TabTwoScreen() {
+
+  async function handleFunction() {
+    const { data, error } = await supabase.functions.invoke('openai-chat-completions', {
+      body: {
+        messages: [{
+            role: "system",
+            content: "You are a helpful assistant."
+          }, {
+          role: "user",
+          content: "List Marvel avangers films."
+        }]
+      }
+    })
+    if (error) console.log(error);
+    console.log(data);
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Tab Two</Text>
+      <Button onPress={handleFunction} title="Chat Test" />
     </View>
   );
 };
