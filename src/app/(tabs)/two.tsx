@@ -2,12 +2,12 @@
 import { Text, View, Button, StyleSheet } from "react-native";
 
 // Utils
-import supabase from "@/utils/supabase.ts";
+import { supabaseClient } from "@/utils/supabase";
 
 export default function TabTwoScreen() {
 
   async function handleFunction() {
-    const { data, error } = await supabase.functions.invoke('openai-chat-completions', {
+    const { data, error } = await supabaseClient.functions.invoke('openai-chat-completions', {
       body: {
         messages: [{
             role: "system",
