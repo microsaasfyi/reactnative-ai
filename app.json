@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "rn",
-    "slug": "rn",
+    "name": "rn-ai-kit",
+    "slug": "rn-ai-kit",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
