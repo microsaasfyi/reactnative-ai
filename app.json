@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "rn-ai-kit",
-    "slug": "rn-ai-kit",
+    "name": "reactnative-ai",
+    "slug": "reactnative-ai",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
