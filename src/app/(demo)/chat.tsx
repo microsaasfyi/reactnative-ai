@@ -2,46 +2,40 @@
 import { useState } from "react";
 
 // React Native
-import { Text, View,FlatList, SafeAreaView, StyleSheet } from "react-native";
+import { View, SafeAreaView, StyleSheet } from "react-native";
 
 // React Native Elements
 import { Input, Button } from '@rneui/themed';
 
-// Utils
-import { supabaseClient } from "@/utils/supabase";
+import MessageItem from "./_components/messageItem";
+import { invokeFunction } from "./actions";
 
 export default function ChatScreen() {
 
-  const [inputText, setInputText] = useState('');
+  const [message, setMessage] = useState<string>("");
   const [messages, setMessages] = useState<any>([{
     role: "asistant",
-    content: "hi!"
-  }]);
+    content: "Hi! How can i help you?"
+  }, {
+    role: "user",
+    content: "Hi!"
+  }])
 
-  async function sendMessage() {
-    setInputText("");
-    const { data, error } = await supabaseClient.functions.invoke('openai-chat', {
-      body: {
-        messages: [...messages, {
-          role: "user",
-          content: inputText
-        }]
-      }
-    })
-    if (error) console.log(error);
-    setMessages([...messages, { role: "user", content: inputText }, data.choices[0].message]);
+  async function handleSubmit(message:string) {
+    setMessages([...messages, { role: "user", content: message }]);
+    setMessage("");
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{  }}>
+      <View style={styles.contentContainer}>
         {messages && messages.map((item:any, index:number) => {
-          return <Text key={index}>{item.content}</Text>
+          return <MessageItem item={item} />
         })}
       </View >
-      <View style={{  }}>
-        <Input value={inputText} onChangeText={setInputText} placeholder="Type a message" />
-        <Button title="Send" onPress={sendMessage} />
+      <View style={styles.formContainer}>
+        <Input value={message} onChangeText={(text) => setMessage(text)} placeholder="Type a message" />
+        <Button title="Send" onPress={() => handleSubmit(message)} />
       </View>
     </SafeAreaView>
   );
@@ -50,5 +44,13 @@ export default function ChatScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1
+  },
+  contentContainer: {
+    flex: 1,
+    padding: 24
+  },
+  formContainer: {
+    flex: 0,
+    padding: 24
   }
 });
