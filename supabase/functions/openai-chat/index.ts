@@ -3,7 +3,6 @@
 */
 
 // Packages
-import { Card } from "@rneui/themed";
 import OpenAI from "https://deno.land/x/openai@v4.24.0/mod.ts";
 
 Deno.serve(async (req: Request) => {
@@ -35,7 +34,7 @@ Deno.serve(async (req: Request) => {
     );
 
   } catch(error) {
-    console.log(error)
+    console.log("error: ", error);
     return new Response(
       JSON.stringify({ message: "Server err." }),
       {
