@@ -1,28 +1,17 @@
 // Expo
-import { Tabs } from "expo-router";
-
-// Settings
-export const unstable_settings = {
-  initialRouteName: "(home)"
-};
+import { Stack } from "expo-router";
 
 export default function TabLayout() {
   return (
-    <Tabs>
-      <Tabs.Screen
+    <Stack>
+      <Stack.Screen
         name="(home)"
-        options={{
-          title: "Home",
-          headerShown: false
-        }}
+        options={{ headerTitle: "Home", headerShown: false }}
       />
-      <Tabs.Screen
-        name="(demo)"
-        options={{
-          title: "Examples",
-          headerShown: false
-        }}
+      <Stack.Screen
+        name="(demo)/chat"
+        options={{ headerTitle: "Chat", headerShown: true }}
       />
-    </Tabs>
+    </Stack>
   );
 };
