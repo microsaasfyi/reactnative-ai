@@ -3,34 +3,48 @@
 */
 
 // Packages
+import { Card } from "@rneui/themed";
 import OpenAI from "https://deno.land/x/openai@v4.24.0/mod.ts";
 
-Deno.serve(async (req) => {
-
-  // Env
-  const apiKey = Deno.env.get('OPENAI_API_KEY');
+Deno.serve(async (req: Request) => {
 
   // Request
   const { messages } = await req.json();
 
   // OpenAI
   const openai = new OpenAI({
-    apiKey: apiKey
+    apiKey: Deno.env.get('OPENAI_API_KEY')
   });
 
-  const response = await openai.chat.completions.create({
-    model: "gpt-4o",
-    messages: messages
-  });
+  try {
 
-  //
-  return new Response(
-    JSON.stringify(response),
-    {
-      headers: {
-        "Content-Type": "application/json"
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o",
+      messages: messages
+    });
+
+    //
+    return new Response(
+      JSON.stringify(response),
+      {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json"
+        }
       }
-    }
-  );
+    );
+
+  } catch(error) {
+    console.log(error)
+    return new Response(
+      JSON.stringify({ message: "Server err." }),
+      {
+        status: 500,
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    );
+  }
 
 });
